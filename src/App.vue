@@ -1,16 +1,29 @@
 <template>
   <div id="app">
-    <HelloWorld />
+    <AdminHeader/>
+    <div class="d-flex">
+      <AdminSidebar />
+      <main class="flex-fill p-3">
+        <AdminDashboard />
+      </main>
+    </div>
+    <!-- <HelloWorld /> -->
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+// import HelloWorld from "./components/HelloWorld.vue";
+import AdminHeader from './components/AdminHeader.vue';
+import AdminSidebar from './components/AdminSidebar.vue';
+import AdminDashboard from './components/AdminDashboard.vue';
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
-    HelloWorld,
+    // HelloWorld,
+    AdminHeader,
+    AdminSidebar,
+    AdminDashboard
   },
 };
 </script>
@@ -22,6 +35,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 0;
 }
 </style>

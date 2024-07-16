@@ -1,8 +1,13 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col">
-        <h1>Halo, Vue.js dan Bootstrap 5!</h1>
+      <div class="col-md-8">
+        <h1>Kolom 1</h1>
+        <p>Konten kolom 1</p>
+      </div>
+      <div class="col-md-4">
+        <h1>Kolom 2</h1>
+        <p>Konten kolom 2</p>
       </div>
     </div>
   </div>
@@ -10,7 +15,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld'
+  name: 'ExampleComponent'
 };
 </script>
 
