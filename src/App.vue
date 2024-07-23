@@ -4,6 +4,7 @@
     <div class="container-fluid flex-grow-1">
       <div class="row">
         <AdminSidebar :isSidebarVisible="isSidebarVisible" class="col-md-2" />
+
         <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4">
           <router-view />
         </main>
@@ -14,27 +15,27 @@
 </template>
 
 <script>
-import AdminHeader from './components/AdminHeader.vue';
-import AdminSidebar from './components/AdminSidebar.vue';
-import AdminFooter from './components/AdminFooter.vue';
+import AdminHeader from "./components/AdminHeader.vue";
+import AdminSidebar from "./components/AdminSidebar.vue";
+import AdminFooter from "./components/AdminFooter.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     AdminHeader,
     AdminSidebar,
-    AdminFooter
+    AdminFooter,
   },
   data() {
     return {
-      isSidebarVisible: false
+      isSidebarVisible: false,
     };
   },
   methods: {
     toggleSidebar() {
       this.isSidebarVisible = !this.isSidebarVisible;
-    }
-  }
+    },
+  },
 };
 </script>
 
