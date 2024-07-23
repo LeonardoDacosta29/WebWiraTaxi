@@ -1,12 +1,17 @@
 <template>
   <div id="app">
+    <AdminHeader />
     <div class="container-fluid">
-      <AdminHeader/>
       <div class="row">
-        <AdminSidebar class="col-2"/>
-        <AdminDashboard class="col-10"/>
+        <!-- Sidebar -->
+        <AdminSidebar class="col-md-2" />
+        <!-- Konten utama -->
+        <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4">
+          <router-view />
+        </main>
       </div>
     </div>
+    <AdminFooter />
   </div>
 </template>
 
@@ -14,7 +19,8 @@
 // import HelloWorld from "./components/HelloWorld.vue";
 import AdminHeader from './components/AdminHeader.vue';
 import AdminSidebar from './components/AdminSidebar.vue';
-import AdminDashboard from './components/AdminDashboard.vue';
+import AdminFooter from './components/AdminFooter.vue';
+// import AdminDashboard from './components/AdminDashboard.vue';
 
 export default {
   name: 'App',
@@ -22,18 +28,20 @@ export default {
     // HelloWorld,
     AdminHeader,
     AdminSidebar,
-    AdminDashboard
-  },
+    AdminFooter
+  }
 };
 </script>
-<!-- 
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 0;
+/* Tambah style global kalau perlu */
+/* Style untuk menyembunyikan sidebar pada layar kecil */
+.sidebar-hidden {
+  display: none !important;
 }
-</style> -->
+@media (min-width: 768px) {
+  .sidebar-hidden {
+    display: block !important;
+  }
+}
+</style>

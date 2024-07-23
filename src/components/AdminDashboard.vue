@@ -1,11 +1,8 @@
 <template>
-    <div class="d-flex flex-column align-items-center">
-      <h1>Dashboard</h1>
-      <div class="w-100 p-3">
-        <!-- Tambahkan konten di sini -->
-        <!-- <p>Welcome to the admin dashboard.</p> -->
-      </div>
-    </div>
+  <div>
+    <h1>Dashboard</h1>
+    <!-- Tambahkan konten dashboard di sini -->
+   </div>
  </template>
   
   <script>
@@ -14,6 +11,7 @@
   };
   </script>
   
-  <!-- <style scoped>
-  </style> -->
+  <style scoped>
+  /* Tambahkan style khusus untuk dashboard jika diperlukan */
+  </style>
   
