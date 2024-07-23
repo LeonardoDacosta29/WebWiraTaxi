@@ -1,13 +1,12 @@
 <template>
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <h1>Dashboard</h1>
-          <p>Welcome to the admin dashboard.</p>
-        </div>
+    <div class="d-flex flex-column align-items-center">
+      <h1>Dashboard</h1>
+      <div class="w-100 p-3">
+        <!-- Tambahkan konten di sini -->
+        <!-- <p>Welcome to the admin dashboard.</p> -->
       </div>
     </div>
-  </template>
+ </template>
   
   <script>
   export default {
@@ -15,6 +14,6 @@
   };
   </script>
   
-  <style scoped>
-  </style>
+  <!-- <style scoped>
+  </style> -->
   

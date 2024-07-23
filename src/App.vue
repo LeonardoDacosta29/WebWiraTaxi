@@ -1,13 +1,12 @@
 <template>
   <div id="app">
-    <AdminHeader/>
-    <div class="d-flex">
-      <AdminSidebar />
-      <main class="flex-fill p-3">
-        <AdminDashboard />
-      </main>
+    <div class="container-fluid">
+      <AdminHeader/>
+      <div class="row">
+        <AdminSidebar class="col-2"/>
+        <AdminDashboard class="col-10"/>
+      </div>
     </div>
-    <!-- <HelloWorld /> -->
   </div>
 </template>
 
@@ -27,7 +26,7 @@ export default {
   },
 };
 </script>
-
+<!-- 
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -37,4 +36,4 @@ export default {
   color: #2c3e50;
   margin-top: 0;
 }
-</style>
+</style> -->
