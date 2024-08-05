@@ -5,7 +5,7 @@
       <div class="row">
         <AdminSidebar :isSidebarVisible="isSidebarVisible" class="col-md-2" />
 
-        <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4">
+        <main class="col-md-10 ms-md-auto col-lg-10 px-md-4 ml-3">
           <router-view />
         </main>
       </div>
