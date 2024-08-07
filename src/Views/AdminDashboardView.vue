@@ -1,9 +1,9 @@
 <template>
   <div class="d-flex flex-column min-vh-100">
-    <AppHeader @toggle-sidebar="toggleSidebar"/>
+    <AppHeader @toggle-sidebar="toggleSidebar"/> <!-- Tambah event untuk toggle sidebar -->
     <div class="container-fluid flex-grow-1 d-flex">
-        <AdminSidebar :isSidebarVisible="isSidebarVisible" class="col-md-2 d-none d-md-block"/>
-        <main :class="['flex-grow-1', 'px-md-4', { 'ml-3': isSidebarVisible }]">
+        <AdminSidebar :isSidebarVisible="isSidebarVisible" class="col-md-2"/> <!-- Pass prop isSidebarVisible -->
+        <main :class="['flex-grow-1', 'px-md-4', { 'ml-md-auto': isSidebarVisible }]"> <!-- Tambah margin-left jika sidebar visible -->
             <AppDashboard />
          </main>
     </div>

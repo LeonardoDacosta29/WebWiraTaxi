@@ -9,6 +9,7 @@
       <div class="d-flex ms-auto align-items-center">
         <!-- Ikon search, notification, dan user profile untuk layar besar -->
         <div class="d-none d-md-flex align-items-center">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <a class="nav-link me-3" href="#"><i class="bi bi-search"></i></a>
           <a class="nav-link me-3" href="#"><i class="bi bi-bell"></i></a>
           <div class="dropdown">

@@ -2,8 +2,8 @@
   <div class="d-flex flex-column min-vh-100">
     <AppHeader @toggle-sidebar="toggleSidebar" />
     <div class="container-fluid flex-grow-1 d-flex">
-      <DriverSidebar :isSidebarVisible="isSidebarVisible" class="col-md-2 d-none d-md-block" />
-      <main :class="['flex-grow-1', 'px-md-4', { 'ml-3': isSidebarVisible }]">
+      <DriverSidebar :isSidebarVisible="isSidebarVisible" class="col-md-2" />
+      <main :class="['flex-grow-1', 'px-md-4', { 'ml-md-auto': isSidebarVisible }]">
         <AppDashboard />
       </main>
     </div>

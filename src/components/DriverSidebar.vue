@@ -1,6 +1,6 @@
 <template>
     <div>
-      <div :class="['sidebar', { 'sidebar-hidden': !isSidebarVisible, 'd-md-block': true }]" id="sidebar-wrapper">
+      <div :class="['sidebar shadow-lg', { 'sidebar-hidden': !isSidebarVisible, 'd-md-block': true }]" id="sidebar-wrapper">
         <div class="list-group list-group-flush">
           <a v-for="item in menuItems" :key="item.name" href="#" 
              :class="['list-group-item', 'list-group-item-action', { 'active': activeItem === item.name }]"
