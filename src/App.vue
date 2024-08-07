@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import AdminHeader from "./components/AdminHeader.vue";
+import AdminHeader from "./components/Header.vue";
 import AdminSidebar from "./components/AdminSidebar.vue";
-import AdminFooter from "./components/AdminFooter.vue";
+import AdminFooter from "./components/Footer.vue";
 
 export default {
   name: "App",

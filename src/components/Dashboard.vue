@@ -63,7 +63,7 @@
 
 <script>
 export default {
-  name: "AdminDashboard",
+  name: "Dashboard",
   data() {
     return {
       // Data statistik bisa dimasukkan di sini

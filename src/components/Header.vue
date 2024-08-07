@@ -40,7 +40,7 @@
 
 <script>
 export default {
-  name: 'AdminHeader',
+  name: 'Header',
   data() {
     return {
       rightMenuVisible: false

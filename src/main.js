@@ -6,7 +6,7 @@ import 'bootstrap'; // Import Bootstrap JS
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
-import AdminDashboard from './components/AdminDashboard.vue';
+import AdminDashboard from './components/Dashboard.vue';
 import ProfileSettings from './components/ProfileSettings.vue';
 
 const routes = [
