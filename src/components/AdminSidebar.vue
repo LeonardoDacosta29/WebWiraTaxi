@@ -1,10 +1,13 @@
+i
 <template>
   <div>
     <div :class="['sidebar shadow-lg', { 'sidebar-hidden': !isSidebarVisible, 'd-md-block': true }]" id="sidebar-wrapper">
       <div class="list-group list-group-flush">
-        <a v-for="item in menuItems" :key="item.name" href="#" :class="['list-group-item', 'list-group-item-action', { active: activeItem === item.name }]" @click="setActive(item.name)">
+        <!-- <a v-for="item in menuItems" :key="item.name" href="#" :class="['list-group-item', 'list-group-item-action', { active: activeItem === item.name }]" @click="setActive(item.name)"> -->
+        <router-link v-for="item in menuItems" :key="item.name" :to="item.route" class="list-group-item list-group-item-action" :class="{ active: $route.path === item.route }" @click="setActive(item.name)">
+          <i :class="item.icon" class="me-2"></i>
           {{ item.name }}
-        </a>
+        </router-link>
       </div>
     </div>
   </div>
@@ -22,14 +25,14 @@ export default {
   data() {
     return {
       menuItems: [
-        { name: "Dashboard Utama", icon: "bi bi-house-door" }, 
-        { name: "Pemesanan" }, 
-        { name: "Manajemen Driver" }, 
-        { name: "Manajemen Kendaraan" }, 
-        { name: "Manajemen Tarif" }, 
-        { name: "Pemantauan" }, 
-        { name: "Manajemen Pengguna" }, 
-        { name: "Laporan" }
+        { name: "Dashboard Utama", icon: "bi bi-house-door", route: "/admin-dashboard" },
+        { name: "Pemesanan", icon: "bi bi-journal", route: "#" },
+        { name: "Manajemen Driver", icon: "bi bi-people", route: "#" },
+        { name: "Manajemen Kendaraan", icon: "bi bi-truck", route: "#" },
+        { name: "Manajemen Tarif", icon: "bi bi-cash-stack", route: "#" },
+        { name: "Pemantauan", icon: "bi bi-eye", route: "#" },
+        { name: "Manajemen User", icon: "bi bi-person-circle", route: "/admin-dashboard/manajemen-user" },
+        { name: "Laporan", icon: "bi bi-graph-up" },
       ],
       activeItem: "Dashboard Utama",
     };

@@ -1,11 +1,15 @@
 <template>
   <div class="d-flex flex-column min-vh-100">
-    <AppHeader @toggle-sidebar="toggleSidebar"/> <!-- Tambah event untuk toggle sidebar -->
+    <AppHeader @toggle-sidebar="toggleSidebar" />
+    <!-- Tambah event untuk toggle sidebar -->
     <div class="container-fluid flex-grow-1 d-flex">
-        <AdminSidebar :isSidebarVisible="isSidebarVisible" class="col-md-2"/> <!-- Pass prop isSidebarVisible -->
-        <main :class="['flex-grow-1', 'px-md-4', { 'ml-md-auto': isSidebarVisible }]"> <!-- Tambah margin-left jika sidebar visible -->
-            <AppDashboard />
-         </main>
+      <AdminSidebar :isSidebarVisible="isSidebarVisible" class="col-md-2" />
+      <!-- Pass prop isSidebarVisible -->
+      <main :class="['flex-grow-1', 'px-md-4', { 'ml-md-auto': isSidebarVisible }]">
+        <!-- Tambah margin-left jika sidebar visible -->
+        <router-view />
+        <!-- Tambahkan router-view untuk merender komponen anak -->
+      </main>
     </div>
     <AppFooter />
   </div>
@@ -15,7 +19,7 @@
 import AppHeader from "../components/AppHeader.vue";
 import AdminSidebar from "../components/AdminSidebar.vue";
 import AppFooter from "../components/AppFooter.vue";
-import AppDashboard from "../components/AppDashboard.vue";
+// import AppDashboard from "../components/AppDashboard.vue";
 
 export default {
   name: "AdminDashboardView",
@@ -23,7 +27,7 @@ export default {
     AppHeader,
     AdminSidebar,
     AppFooter,
-    AppDashboard,
+    // AppDashboard,
   },
   data() {
     return {

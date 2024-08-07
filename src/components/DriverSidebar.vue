@@ -5,7 +5,8 @@
           <a v-for="item in menuItems" :key="item.name" href="#" 
              :class="['list-group-item', 'list-group-item-action', { 'active': activeItem === item.name }]"
              @click="setActive(item.name)">
-            {{ item.name }}
+             <i :class="item.icon" class="me-2"></i>
+             {{ item.name }}
           </a>
         </div>
       </div>
@@ -24,9 +25,9 @@
     data() {
       return {
         menuItems: [
-          { name: 'Dashboard Utama' },
-          { name: 'Riwayat Perjalanan' },
-          { name: 'Pengaturan Profil' }
+        { name: 'Dashboard Utama', icon: "bi bi-house-door" },
+        { name: 'Riwayat Perjalanan', icon: "bi bi-clock-history" },
+        { name: 'Pengaturan Profil', icon: "bi bi-gear" }
         ],
         activeItem: 'Dashboard Utama'
       };
