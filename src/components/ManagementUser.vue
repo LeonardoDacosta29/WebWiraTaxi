@@ -15,13 +15,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in adminUsers" :key="user.id">
-          <td>{{ user.username }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.phone }}</td>
+        <tr v-for="user in adminUsers" :key="user.User_id">
+          <td>{{ user.Username }}</td>
+          <td>{{ user.Email }}</td>
+          <td>{{ user.No_hp }}</td>
           <td>
             <button class="btn btn-warning btn-sm me-2" @click="editUser(user)">Edit</button>
-            <button class="btn btn-danger btn-sm" @click="deleteUser(user.id)">Hapus</button>
+            <button class="btn btn-danger btn-sm" @click="deleteUser(user.User_id)">Hapus</button>
           </td>
         </tr>
       </tbody>
@@ -39,13 +39,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in driverUsers" :key="user.id">
-          <td>{{ user.username }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.phone }}</td>
+        <tr v-for="user in driverUsers" :key="user.User_id">
+          <td>{{ user.Username }}</td>
+          <td>{{ user.Email }}</td>
+          <td>{{ user.No_hp }}</td>
           <td>
             <button class="btn btn-warning btn-sm me-2" @click="editUser(user)">Edit</button>
-            <button class="btn btn-danger btn-sm" @click="deleteUser(user.id)">Hapus</button>
+            <button class="btn btn-danger btn-sm" @click="deleteUser(user.User_id)">Hapus</button>
           </td>
         </tr>
       </tbody>
@@ -63,19 +63,19 @@
             <form @submit.prevent="saveUser">
               <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" id="username" v-model="form.username" class="form-control" required>
+                <input type="text" id="username" v-model="form.Username" class="form-control" required>
               </div>
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" v-model="form.email" class="form-control" required>
+                <input type="email" id="email" v-model="form.Email" class="form-control" required>
               </div>
               <div class="mb-3">
                 <label for="phone" class="form-label">No. HP</label>
-                <input type="text" id="phone" v-model="form.phone" class="form-control" required>
+                <input type="text" id="phone" v-model="form.No_hp" class="form-control" required>
               </div>
               <div class="mb-3">
                 <label for="role" class="form-label">Role</label>
-                <select id="role" v-model="form.role" class="form-control" required>
+                <select id="role" v-model="form.Role" class="form-control" required>
                   <option value="admin">Admin</option>
                   <option value="driver">Driver</option>
                 </select>
@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import axios from '../axiosConfig';
 import { Modal } from 'bootstrap';
 
 export default {
@@ -102,23 +103,36 @@ export default {
       driverUsers: [],
       isEditing: false,
       form: {
-        id: null,
-        username: '',
-        email: '',
-        phone: '',
-        role: 'admin'
+        User_id: null,
+        Username: '',
+        Email: '',
+        No_hp: '',
+        Password: '',
+        Role: 'admin'
       }
     };
   },
   methods: {
+    fetchUsers() {
+      axios.get('/users')
+        .then(response => {
+          console.log('Fetched users:', response.data);
+          this.adminUsers = response.data.filter(user => user.Role === 'admin');
+          this.driverUsers = response.data.filter(user => user.Role === 'driver');
+        })
+        .catch(error => {
+          console.error('Error fetching users:', error);
+        });
+    },
     showAddUserModal() {
       this.isEditing = false;
       this.form = {
-        id: null,
-        username: '',
-        email: '',
-        phone: '',
-        role: 'admin'
+        User_id: null,
+        Username: '',
+        Email: '',
+        No_hp: '',
+        Password: '',
+        Role: 'admin'
       };
       const userModal = new Modal(document.getElementById('userModal'));
       userModal.show();
@@ -130,20 +144,41 @@ export default {
       userModal.show();
     },
     saveUser() {
+      const user = { ...this.form };
       if (this.isEditing) {
-        const userIndex = this[this.form.role + 'Users'].findIndex(user => user.id === this.form.id);
-        this[this.form.role + 'Users'].splice(userIndex, 1, this.form);
+        axios.put(`/users/${user.User_id}`, user)
+          .then(() => {
+            this.fetchUsers();
+            const userModal = Modal.getInstance(document.getElementById('userModal'));
+            userModal.hide();
+          })
+          .catch(error => {
+            console.error('Error saving user:', error);
+          });
       } else {
-        this.form.id = Date.now();
-        this[this.form.role + 'Users'].push(this.form);
+        axios.post('/users', user)
+          .then(() => {
+            this.fetchUsers();
+            const userModal = Modal.getInstance(document.getElementById('userModal'));
+            userModal.hide();
+          })
+          .catch(error => {
+            console.error('Error adding user:', error);
+          });
       }
-      const userModal = Modal.getInstance(document.getElementById('userModal'));
-      userModal.hide();
     },
     deleteUser(userId) {
-      this.adminUsers = this.adminUsers.filter(user => user.id !== userId);
-      this.driverUsers = this.driverUsers.filter(user => user.id !== userId);
+      axios.delete(`/users/${userId}`)
+        .then(() => {
+          this.fetchUsers();
+        })
+        .catch(error => {
+          console.error('Error deleting user:', error);
+        });
     }
+  },
+  mounted() {
+    this.fetchUsers();
   }
 };
 </script>
