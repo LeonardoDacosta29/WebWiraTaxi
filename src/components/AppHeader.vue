@@ -13,7 +13,7 @@
           <a class="nav-link me-3" href="#"><i class="bi bi-bell"></i></a>
           <div class="dropdown">
             <a class="nav-link dropdown-toggle me-3" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="path-to-profile-image" alt="User" class="rounded-circle" style="width: 40px; height: 40px;">
+              <img src="path-to-profile-image" alt="User" class="rounded-circle" style="width: 40px; height: 40px" />
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
               <li><a class="dropdown-item" href="#">Profile</a></li>
@@ -28,7 +28,7 @@
       </div>
     </div>
     <!-- Menu kanan untuk perangkat kecil -->
-    <div v-if="rightMenuVisible" class="dropdown-menu dropdown-menu-end show d-md-none" style="right: 10px; top: 56px; position: absolute;">
+    <div v-if="rightMenuVisible" class="dropdown-menu dropdown-menu-end show d-md-none" style="right: 10px; top: 56px; position: absolute">
       <a class="dropdown-item" href="#"><i class="bi bi-search"></i> Search</a>
       <a class="dropdown-item" href="#"><i class="bi bi-bell"></i> Notifications</a>
       <div class="dropdown-divider"></div>
@@ -40,18 +40,18 @@
 
 <script>
 export default {
-  name: 'AppHeader',
+  name: "AppHeader",
   data() {
     return {
-      rightMenuVisible: false
+      rightMenuVisible: false,
     };
   },
-  
+
   methods: {
     toggleRightMenu() {
       this.rightMenuVisible = !this.rightMenuVisible;
-    }
-  }
+    },
+  },
 };
 </script>
 

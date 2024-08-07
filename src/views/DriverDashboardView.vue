@@ -1,10 +1,12 @@
 <template>
-  <div>
-    <AppHeader />
-    <DriverSidebar />
-    <main>
-      <AppDashboard />
-    </main>
+  <div class="d-flex flex-column min-vh-100">
+    <AppHeader @toggle-sidebar="toggleSidebar" />
+    <div class="container-fluid flex-grow-1 d-flex">
+      <DriverSidebar :isSidebarVisible="isSidebarVisible" class="col-md-2 d-none d-md-block" />
+      <main :class="['flex-grow-1', 'px-md-4', { 'ml-3': isSidebarVisible }]">
+        <AppDashboard />
+      </main>
+    </div>
     <AppFooter />
   </div>
 </template>
@@ -22,6 +24,16 @@ export default {
     DriverSidebar,
     AppFooter,
     AppDashboard,
+  },
+  data() {
+    return {
+      isSidebarVisible: false, // Menyimpan status visibilitas sidebar
+    };
+  },
+  methods: {
+    toggleSidebar() {
+      this.isSidebarVisible = !this.isSidebarVisible; // Toggle status visibilitas sidebar
+    },
   },
 };
 </script>
