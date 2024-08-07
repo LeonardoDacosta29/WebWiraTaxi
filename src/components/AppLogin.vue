@@ -17,7 +17,7 @@
   
   <script>
   export default {
-    name: 'Login',
+    name: 'AppLogin',
     data() {
       return {
         username: '',
