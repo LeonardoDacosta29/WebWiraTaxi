@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light ">
     <div class="container-fluid">
       <!-- Tombol untuk toggle sidebar di perangkat kecil -->
       <button @click="$emit('toggle-sidebar')" class="btn btn-primary d-md-none me-3">
@@ -77,4 +77,8 @@ export default {
 .nav-link {
   margin-right: 1rem; /* Tambahkan jarak antar ikon */
 }
+/* .navbar {
+  z-index: 1000;
+  width: 100%;
+} */
 </style>

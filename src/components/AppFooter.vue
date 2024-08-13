@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-light text-center text-lg-start mt-auto">
+  <footer class="bg-light text-center text-lg-start mt-auto fixed-bottom">
     <div class="text-center p-3">© 2024 WIRA TAXI</div>
   </footer>
 </template>
