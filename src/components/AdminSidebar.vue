@@ -27,7 +27,7 @@ export default {
       menuItems: [
         { name: "Dashboard Utama", icon: "bi bi-house-door", route: "/admin-dashboard" },
         { name: "Pemesanan", icon: "bi bi-journal", route: "#" },
-        { name: "Manajemen Driver", icon: "bi bi-people", route: "#" },
+        { name: "Manajemen Driver", icon: "bi bi-people", route: "/admin-dashboard/manajemen-driver" },
         { name: "Manajemen Kendaraan", icon: "bi bi-truck", route: "#" },
         { name: "Manajemen Tarif", icon: "bi bi-cash-stack", route: "#" },
         { name: "Pemantauan", icon: "bi bi-eye", route: "#" },

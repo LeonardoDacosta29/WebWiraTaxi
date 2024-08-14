@@ -53,13 +53,14 @@ export default {
             this.$router.push("/driver-dashboard");
           }
         } else {
-          this.errorMessage = "Username atau Password salah";
+          this.errorMessage = response.data.message;
         }
       } catch (error) {
         console.error(error);
-        this.errorMessage = "Terjadi kesalahan saat menghubungi server";
+        // Jika ada masalah dengan koneksi atau server
+      this.errorMessage = error.response?.data.message || "Terjadi kesalahan saat menghubungi server";
       }
-    },
+    } 
   },
 };
 </script>
