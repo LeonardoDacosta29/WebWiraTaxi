@@ -4,6 +4,8 @@ import DriverDashboardView from "../views/DriverDashboardView.vue";
 import LoginView from "../views/LoginView.vue";
 import ManagementUser from "../components/ManagementUser.vue";
 import ManagementDriver from "../components/ManagementDriver.vue"; // Komponen Manajemen Driver
+import ManagementKendaraan from "../components/ManagementKendaraan.vue"; // Komponen Manajemen Kendaraan
+import ManagementRuteTarif from "../components/ManagementRuteTarif.vue"; // Komponen Manajemen Rute dan Tarif
 import AppDashboard from "../components/AppDashboard.vue";
 
 const routes = [
@@ -16,6 +18,8 @@ const routes = [
       { path: "", name: "AppDashboard", component: AppDashboard }, // Rute default
       { path: "manajemen-user", name: "ManagementUser", component: ManagementUser },
       { path: "manajemen-driver", name: "ManagementDriver", component: ManagementDriver }, // Ganti ini
+      { path: "manajemen-kendaraan", name: "ManagementKendaraan", component: ManagementKendaraan },
+      { path: "manajemen-rutetarif", name: "ManagementRuteTarif", component: ManagementRuteTarif },
     ],
   },
   { path: "/driver-dashboard", name: "DriverDashboard", component: DriverDashboardView },

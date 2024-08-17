@@ -233,7 +233,7 @@ export default {
 }
 
 .table-container {
-  max-height: 175px;
+  max-height: 500px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   margin-top: 20px;
@@ -277,6 +277,15 @@ select.form-control option {
     color: #000000 !important; /* Mengubah warna teks dalam option menjadi putih */
     background-color: #ffffff !important; /* Mengubah warna latar belakang option menjadi hitam */
 }
+select.form-control {
+    color: #000 !important;
+    background-color: #fff !important;
+}
+select.form-control option {
+    color: #000 !important;
+    background-color: #fff !important;
+}
+
 
 
 </style>
