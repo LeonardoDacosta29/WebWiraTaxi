@@ -3,6 +3,7 @@ import AdminDashboardView from "../views/AdminDashboardView.vue";
 import DriverDashboardView from "../views/DriverDashboardView.vue";
 import LoginView from "../views/LoginView.vue";
 import ManagementUser from "../components/ManagementUser.vue";
+import ManagementDriver from "../components/ManagementDriver.vue"; // Komponen Manajemen Driver
 import AppDashboard from "../components/AppDashboard.vue";
 
 const routes = [
@@ -10,11 +11,11 @@ const routes = [
   {
     path: "/admin-dashboard",
     component: AdminDashboardView,
-    meta: { requiresAuth: true }, // Tambahkan ini
+    meta: { requiresAuth: true }, // Rute yang membutuhkan autentikasi
     children: [
-      { path: "", name: "AppDashboard", component: AppDashboard }, // Route default
+      { path: "", name: "AppDashboard", component: AppDashboard }, // Rute default
       { path: "manajemen-user", name: "ManagementUser", component: ManagementUser },
-      { path: "manajemen-driver", name: "ManagementDriver", component: ManagementUser },
+      { path: "manajemen-driver", name: "ManagementDriver", component: ManagementDriver }, // Ganti ini
     ],
   },
   { path: "/driver-dashboard", name: "DriverDashboard", component: DriverDashboardView },
@@ -24,22 +25,5 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-
-// // Tambahkan Guard untuk melindungi rute
-// router.beforeEach((to, from, next) => {
-//   const token = localStorage.getItem('token');
-//   console.log("Token saat ini:", token); // Cek nilai token
-
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     if (!token) {
-//       console.log("Token tidak ada, arahkan ke login");
-//       next({ name: 'Login' });
-//     } else {
-//       next();
-//     }
-//   } else {
-//     next();
-//   }
-// });
 
 export default router;
