@@ -26,12 +26,14 @@ export default {
     return {
       menuItems: [
         { name: "Dashboard Utama", icon: "bi bi-house-door", route: "/admin-dashboard" },
-        { name: "Pemesanan", icon: "bi bi-journal", route: "#" },
+        { name: "Manajemen Pesanan", icon: "bi bi-journal", route: "admin-dashboard/manajemen-pesanan" },
+        { name: "Manajemen User", icon: "bi bi-person-circle", route: "/admin-dashboard/manajemen-user" },
         { name: "Manajemen Driver", icon: "bi bi-people", route: "/admin-dashboard/manajemen-driver" },
         { name: "Manajemen Kendaraan", icon: "bi bi-truck", route: "/admin-dashboard/manajemen-kendaraan" },
-        { name: "Manajemen Rute dan Tarif", icon: "bi bi-cash-stack", route: "/admin-dashboard/manajemen-rutetarif" },
+        { name: "Manajemen Rute dan Tarif", icon: "bi bi-currency-exchange", route: "/admin-dashboard/manajemen-rutetarif" },
+        { name: "Manajemen Jadwal", icon: "bi bi-calendar-check", route: "/admin-dashboard/manajemen-jadwal" },
         { name: "Pemantauan", icon: "bi bi-eye", route: "#" },
-        { name: "Manajemen User", icon: "bi bi-person-circle", route: "/admin-dashboard/manajemen-user" },
+        
         { name: "Laporan", icon: "bi bi-graph-up" },
       ],
       activeItem: "Dashboard Utama",

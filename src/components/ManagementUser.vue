@@ -3,8 +3,7 @@
     <h2>Manajemen Pengguna</h2>
     <button class="btn btn-primary mb-3" @click="showAddUserModal">Tambah Pengguna</button>
 
-    <!-- Tabel Admin -->
-    <h3>Admin</h3>
+    <!-- Tabel Pengguna -->
     <div class="table-container">
       <div class="table-scrollable">
         <table class="table table-striped">
@@ -13,45 +12,19 @@
               <th>Username</th>
               <th>Email</th>
               <th>No. HP</th>
+              <th>Role</th>
               <th>Aksi</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="user in adminUsers" :key="user.User_id">
+            <tr v-for="user in users" :key="user.User_id">
               <td>{{ user.Username }}</td>
               <td>{{ user.Email }}</td>
               <td>{{ user.No_hp }}</td>
+              <td>{{ user.Role }}</td>
               <td>
                 <button class="btn btn-warning btn-sm me-2" @click="editUser(user)">Edit</button>
-                <button class="btn btn-danger btn-sm" @click="deleteUser(user.User_id)">Hapus</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Tabel Driver -->
-    <h3>Driver</h3>
-    <div class="table-container">
-      <div class="table-scrollable">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>Email</th>
-              <th>No. HP</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="user in driverUsers" :key="user.User_id">
-              <td>{{ user.Username }}</td>
-              <td>{{ user.Email }}</td>
-              <td>{{ user.No_hp }}</td>
-              <td>
-                <button class="btn btn-warning btn-sm me-2" @click="editUser(user)">Edit</button>
-                <button class="btn btn-danger btn-sm" @click="deleteUser(user.User_id)">Hapus</button>
+                <button class="btn btn-danger btn-sm" @click="confirmDeleteUser(user.User_id)">Hapus</button>
               </td>
             </tr>
           </tbody>
@@ -83,11 +56,11 @@
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" id="password" v-model="form.Password" class="form-control" required />
+                <input type="password" id="password" v-model="form.Password" class="form-control" :required="!isEditing" />
               </div>
               <div class="mb-3">
                 <label for="confirmPassword" class="form-label">Konfirmasi Password</label>
-                <input type="password" id="confirmPassword" v-model="confirmPassword" class="form-control" required />
+                <input type="password" id="confirmPassword" v-model="confirmPassword" class="form-control" :required="!isEditing" />
               </div>
               <div class="mb-3">
                 <label for="role" class="form-label">Role</label>
@@ -105,6 +78,7 @@
         </div>
       </div>
     </div>
+
     <!-- Notifikasi -->
     <div v-if="showAlert" :class="['alert', alertType]" role="alert" ref="alertBox">
       {{ alertMessage }}
@@ -119,8 +93,7 @@ import { Modal } from "bootstrap";
 export default {
   data() {
     return {
-      adminUsers: [],
-      driverUsers: [],
+      users: [],
       isEditing: false,
       form: {
         User_id: null,
@@ -130,24 +103,23 @@ export default {
         Password: "",
         Role: "admin",
       },
-      confirmPassword: "", // Tambahkan ini
+      confirmPassword: "",
       alertMessage: "",
       alertType: "",
       showAlert: false,
     };
   },
+  async mounted() {
+    await this.fetchUsers();
+  },
   methods: {
-    fetchUsers() {
-      axios
-        .get("/users")
-        .then((response) => {
-          console.log("Fetched users:", response.data);
-          this.adminUsers = response.data.filter((user) => user.Role === "admin");
-          this.driverUsers = response.data.filter((user) => user.Role === "driver");
-        })
-        .catch((error) => {
-          console.error("Error fetching users:", error);
-        });
+    async fetchUsers() {
+      try {
+        const response = await axios.get("/users");
+        this.users = response.data;
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
     },
     showAddUserModal() {
       this.isEditing = false;
@@ -159,65 +131,51 @@ export default {
         Password: "",
         Role: "admin",
       };
-      this.confirmPassword = ""; // Reset confirmPassword
+      this.confirmPassword = "";
       const userModal = new Modal(document.getElementById("userModal"));
       userModal.show();
     },
     editUser(user) {
       this.isEditing = true;
       this.form = { ...user };
-      this.confirmPassword = user.Password; // Reset confirmPassword
+      this.confirmPassword = user.Password;
       const userModal = new Modal(document.getElementById("userModal"));
       userModal.show();
     },
-    saveUser() {
+    async saveUser() {
       if (this.form.Password !== this.confirmPassword) {
         this.showAlertMessage("Password dan konfirmasi password tidak sesuai.", "alert-danger");
         return;
       }
 
-      const user = { ...this.form };
-      if (this.isEditing) {
-        axios
-          .put(`/users/${user.User_id}`, user)
-          .then(() => {
-            this.fetchUsers();
-            const userModal = Modal.getInstance(document.getElementById("userModal"));
-            userModal.hide();
-            this.showAlertMessage("Pengguna berhasil diperbarui.", "alert-success");
-          })
-          .catch(() => {
-            this.showAlertMessage("Gagal memperbarui pengguna.", "alert-danger");
-          });
-      } else {
-        axios
-          .post("/users", user)
-          .then(() => {
-            this.fetchUsers();
-            const userModal = Modal.getInstance(document.getElementById("userModal"));
-            userModal.hide();
-            this.showAlertMessage("Pengguna berhasil ditambahkan.", "alert-success");
-          })
-          .catch(() => {
-            this.showAlertMessage("Gagal menambahkan pengguna.", "alert-danger");
-          });
+      try {
+        if (this.isEditing) {
+          await axios.put(`/users/${this.form.User_id}`, this.form);
+          this.showAlertMessage("Pengguna berhasil diperbarui.", "alert-success");
+        } else {
+          await axios.post("/users", this.form);
+          this.showAlertMessage("Pengguna berhasil ditambahkan.", "alert-success");
+        }
+        this.fetchUsers();
+        const userModal = Modal.getInstance(document.getElementById("userModal"));
+        userModal.hide();
+      } catch (error) {
+        this.showAlertMessage("Gagal menyimpan pengguna.", "alert-danger");
       }
     },
-    confirmDelete(userId) {
+    confirmDeleteUser(userId) {
       if (confirm("Apakah Anda yakin ingin menghapus pengguna ini?")) {
         this.deleteUser(userId);
       }
     },
-    deleteUser(userId) {
-      axios
-        .delete(`/users/${userId}`)
-        .then(() => {
-          this.fetchUsers();
-          this.showAlertMessage("Pengguna berhasil dihapus.", "alert-success");
-        })
-        .catch(() => {
-          this.showAlertMessage("Gagal menghapus pengguna.", "alert-danger");
-        });
+    async deleteUser(userId) {
+      try {
+        await axios.delete(`/users/${userId}`);
+        this.fetchUsers();
+        this.showAlertMessage("Pengguna berhasil dihapus.", "alert-success");
+      } catch (error) {
+        this.showAlertMessage("Gagal menghapus pengguna.", "alert-danger");
+      }
     },
     showAlertMessage(message, type) {
       this.alertMessage = message;
@@ -225,47 +183,36 @@ export default {
       this.showAlert = true;
       setTimeout(() => {
         this.showAlert = false;
-      }, 3000); // Notifikasi akan hilang setelah 3 detik
+      }, 3000);
     },
-  },
-  mounted() {
-    this.fetchUsers();
   },
 };
 </script>
 
 <style scoped>
-/* Style khusus untuk UserManagement.vue */
 .alert {
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 1050; /* Lebih tinggi dari modal */
+  z-index: 1050;
   max-width: 300px;
   opacity: 0.9;
   transition: opacity 0.3s ease-in-out;
 }
 
-.alert.hidden {
-  opacity: 0;
-}
-
-/* Pastikan table-container bisa menampung overflow secara horizontal */
 .table-container {
-  max-height: 175px; /* Maksimal dua baris yang terlihat */
-  overflow-y: auto; /* Scroll secara vertikal */
-  -webkit-overflow-scrolling: touch; /* untuk scroll yang smooth di perangkat mobile */
+  max-height: 500px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   margin-top: 20px;
 }
 
-/* Buat tabel dapat digeser secara horizontal */
 .table-scrollable {
   display: block;
   overflow-x: auto;
   white-space: nowrap;
 }
 
-/* Atur tabel dan kolom untuk mencegah wrapping */
 .table th,
 .table td {
   white-space: nowrap;
@@ -275,13 +222,11 @@ export default {
 .table-container thead th {
   position: sticky;
   top: 0;
-  background-color: white; /* atau sesuai warna latar belakang tabel */
-  z-index: 2; /* Supaya tetap berada di atas */
+  background-color: white;
+  z-index: 2;
   box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
 }
 
-
-/* Style khusus untuk UserManagement.vue */
 .modal-dialog {
   max-width: 500px;
   margin: 1.75rem auto;
@@ -291,5 +236,15 @@ export default {
   .modal-dialog {
     max-width: 90%;
   }
+}
+
+.modal-content .form-control {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+}
+
+select.form-control option {
+  color: #000000 !important;
+  background-color: #ffffff !important;
 }
 </style>
