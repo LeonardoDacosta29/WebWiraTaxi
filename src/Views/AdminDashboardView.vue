@@ -19,7 +19,7 @@
 import AppHeader from "../components/AppHeader.vue";
 import AdminSidebar from "../components/AdminSidebar.vue";
 import AppFooter from "../components/AppFooter.vue";
-// import AppDashboard from "../components/AppDashboard.vue";
+// import AdminDashboard from "../components/AppDashboard.vue";
 
 export default {
   name: "AdminDashboardView",
@@ -27,7 +27,7 @@ export default {
     AppHeader,
     AdminSidebar,
     AppFooter,
-    // AppDashboard,
+    // AdminDashboard,
   },
   data() {
     return {

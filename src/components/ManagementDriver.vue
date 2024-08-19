@@ -3,7 +3,6 @@
     <h2>Manajemen Driver</h2>
     <button class="btn btn-primary mb-3" @click="showAddDriverModal">Tambah Driver Baru</button>
 
-    <!-- Tabel Driver -->
     <div class="table-container">
       <div class="table-scrollable">
         <table class="table table-striped">
@@ -34,7 +33,6 @@
       </div>
     </div>
 
-    <!-- Modal Tambah/Edit Driver -->
     <div class="modal fade" id="driverModal" tabindex="-1" aria-labelledby="driverModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -47,11 +45,10 @@
               <div class="mb-3">
                 <label for="username">Pilih Username</label>
                 <select v-model="selectedUserId" class="form-control" required>
-                  <option v-for="user in users" :key="user.user_id" :value="user.user_id">
-                    {{ user.username }} 
+                  <option v-for="user in users" :key="user.User_id" :value="user.User_id">
+                    {{ user.Username }}
                   </option>
                 </select>
-
               </div>
 
               <div class="mb-3">
@@ -86,7 +83,6 @@
       </div>
     </div>
 
-    <!-- Notifikasi -->
     <div v-if="showAlert" :class="['alert', alertType]" role="alert" ref="alertBox">
       {{ alertMessage }}
     </div>
@@ -117,27 +113,25 @@ export default {
   },
   async mounted() {
     await this.fetchDrivers();
-    await this.fetchUsers(); // Pastikan fetchUsers dipanggil di sini
+    await this.fetchUsers();
   },
   methods: {
     async fetchUsers() {
-    try {
-      const response = await axios.get("/users");
-      console.log(response.data); // Periksa data yang diterima
-      this.users = response.data;
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  },
-    fetchDrivers() {
-      axios
-        .get("/drivers")
-        .then((response) => {
-          this.drivers = response.data;
-        })
-        .catch((error) => {
-          console.error("Error fetching drivers:", error);
-        });
+      try {
+        const response = await axios.get("/users");
+        console.log(response.data); // Log ini akan menampilkan data yang diambil di console
+        this.users = response.data;
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    },
+    async fetchDrivers() {
+      try {
+        const response = await axios.get("/drivers");
+        this.drivers = response.data;
+      } catch (error) {
+        console.error("Error fetching drivers:", error);
+      }
     },
     showAddDriverModal() {
       this.isEditing = false;
@@ -151,32 +145,21 @@ export default {
       const driverModal = new Modal(document.getElementById("driverModal"));
       driverModal.show();
     },
-    saveDriver() {
+    async saveDriver() {
       const driver = { ...this.form, user_id: this.selectedUserId };
-      if (this.isEditing) {
-        axios
-          .put(`/drivers/${this.editingDriverId}`, driver)
-          .then(() => {
-            this.fetchDrivers();
-            const driverModal = Modal.getInstance(document.getElementById("driverModal"));
-            driverModal.hide();
-            this.showAlertMessage("Driver berhasil diperbarui.", "alert-success");
-          })
-          .catch(() => {
-            this.showAlertMessage("Gagal memperbarui driver.", "alert-danger");
-          });
-      } else {
-        axios
-          .post("/drivers", driver)
-          .then(() => {
-            this.fetchDrivers();
-            const driverModal = Modal.getInstance(document.getElementById("driverModal"));
-            driverModal.hide();
-            this.showAlertMessage("Driver berhasil ditambahkan.", "alert-success");
-          })
-          .catch(() => {
-            this.showAlertMessage("Gagal menambahkan driver.", "alert-danger");
-          });
+      try {
+        if (this.isEditing) {
+          await axios.put(`/drivers/${this.editingDriverId}`, driver);
+          this.showAlertMessage("Driver berhasil diperbarui.", "alert-success");
+        } else {
+          await axios.post("/drivers", driver);
+          this.showAlertMessage("Driver berhasil ditambahkan.", "alert-success");
+        }
+        this.fetchDrivers();
+        const driverModal = Modal.getInstance(document.getElementById("driverModal"));
+        driverModal.hide();
+      } catch (error) {
+        this.showAlertMessage("Gagal menyimpan driver.", "alert-danger");
       }
     },
     editDriver(driver) {
@@ -192,17 +175,15 @@ export default {
       const driverModal = new Modal(document.getElementById("driverModal"));
       driverModal.show();
     },
-    deleteDriver(driverId) {
+    async deleteDriver(driverId) {
       if (confirm("Apakah Anda yakin ingin menghapus driver ini?")) {
-        axios
-          .delete(`/drivers/${driverId}`)
-          .then(() => {
-            this.fetchDrivers();
-            this.showAlertMessage("Driver berhasil dihapus.", "alert-success");
-          })
-          .catch(() => {
-            this.showAlertMessage("Gagal menghapus driver.", "alert-danger");
-          });
+        try {
+          await axios.delete(`/drivers/${driverId}`);
+          this.showAlertMessage("Driver berhasil dihapus.", "alert-success");
+          this.fetchDrivers();
+        } catch (error) {
+          this.showAlertMessage("Gagal menghapus driver.", "alert-danger");
+        }
       }
     },
     showAlertMessage(message, type) {
@@ -226,10 +207,6 @@ export default {
   max-width: 300px;
   opacity: 0.9;
   transition: opacity 0.3s ease-in-out;
-}
-
-.alert.hidden {
-  opacity: 0;
 }
 
 .table-container {
@@ -269,23 +246,14 @@ export default {
     max-width: 90%;
   }
 }
+
 .modal-content .form-control {
-    color: #000000 !important;
-    background-color: #ffffff !important;
+  color: #000000 !important;
+  background-color: #ffffff !important;
 }
+
 select.form-control option {
-    color: #000000 !important; /* Mengubah warna teks dalam option menjadi putih */
-    background-color: #ffffff !important; /* Mengubah warna latar belakang option menjadi hitam */
+  color: #000000 !important;
+  background-color: #ffffff !important;
 }
-select.form-control {
-    color: #000 !important;
-    background-color: #fff !important;
-}
-select.form-control option {
-    color: #000 !important;
-    background-color: #fff !important;
-}
-
-
-
 </style>

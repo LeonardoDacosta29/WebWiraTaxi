@@ -44,7 +44,7 @@
             <form @submit.prevent="saveUser">
               <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" id="username" v-model="form.Username" class="form-control" required />
+                <input type="text" id="username" v-model="form.Username" class="form-control" maxlength="10" required />
               </div>
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
@@ -56,12 +56,37 @@
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" id="password" v-model="form.Password" class="form-control" :required="!isEditing" />
+                <div class="input-group">
+                  <input
+                    :type="showPassword ? 'text' : 'password'"
+                    id="password"
+                    v-model="form.Password"
+                    class="form-control"
+                    :required="!isEditing"
+                    maxlength="8"
+                  />
+                  <span class="input-group-text" @click="togglePassword">
+                    <i :class="showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
+                  </span>
+                </div>
               </div>
               <div class="mb-3">
                 <label for="confirmPassword" class="form-label">Konfirmasi Password</label>
-                <input type="password" id="confirmPassword" v-model="confirmPassword" class="form-control" :required="!isEditing" />
+                <div class="input-group">
+                  <input
+                    :type="showConfirmPassword ? 'text' : 'password'"
+                    id="confirmPassword"
+                    v-model="confirmPassword"
+                    class="form-control"
+                    :required="!isEditing"
+                    maxlength="8"
+                  />
+                  <span class="input-group-text" @click="toggleConfirmPassword">
+                    <i :class="showConfirmPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
+                  </span>
+                </div>
               </div>
+
               <div class="mb-3">
                 <label for="role" class="form-label">Role</label>
                 <select id="role" v-model="form.Role" class="form-control" required>
@@ -107,12 +132,20 @@ export default {
       alertMessage: "",
       alertType: "",
       showAlert: false,
+      showPassword: false, // Menyimpan status tampilan password
+      showConfirmPassword: false, // Menyimpan status tampilan confirm password
     };
   },
   async mounted() {
     await this.fetchUsers();
   },
   methods: {
+    togglePassword() {
+      this.showPassword = !this.showPassword;
+    },
+    toggleConfirmPassword() {
+      this.showConfirmPassword = !this.showConfirmPassword;
+    },
     async fetchUsers() {
       try {
         const response = await axios.get("/users");
@@ -188,6 +221,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 .alert {

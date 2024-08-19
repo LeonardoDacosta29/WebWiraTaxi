@@ -4,7 +4,8 @@
     <div class="container-fluid flex-grow-1 d-flex">
       <DriverSidebar :isSidebarVisible="isSidebarVisible" class="col-md-2" />
       <main :class="['flex-grow-1', 'px-md-4', { 'ml-md-auto': isSidebarVisible }]">
-        <AppDashboard />
+        <router-view />
+        <!-- Tambahkan router-view untuk merender komponen anak -->
       </main>
     </div>
     <AppFooter />
@@ -15,7 +16,7 @@
 import AppHeader from "../components/AppHeader.vue";
 import DriverSidebar from "../components/DriverSidebar.vue";
 import AppFooter from "../components/AppFooter.vue";
-import AppDashboard from "../components/AppDashboard.vue";
+// import DriverDashboard from "../components/DriverDashboard.vue";
 
 export default {
   name: "DriverDashboardView",
@@ -23,7 +24,7 @@ export default {
     AppHeader,
     DriverSidebar,
     AppFooter,
-    AppDashboard,
+    // DriverDashboard,
   },
   data() {
     return {

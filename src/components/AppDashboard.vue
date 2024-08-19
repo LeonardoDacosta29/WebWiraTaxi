@@ -1,6 +1,34 @@
 <template>
   <div class="container-fluid">
     <div class="row">
+      <!-- Statistik Pesanan Pending -->
+      <div class="col-md-3 mb-4">
+        <div class="card bg-danger text-white h-100">
+          <div class="card-body">
+            <div class="card-body-icon">
+              <i class="bi bi-hourglass-split"></i>
+            </div>
+            <div class="card-text">
+              <div class="mr-5">Pesanan Pending</div>
+              <h3>30</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Statistik Pesanan Berlangsung -->
+      <div class="col-md-3 mb-4">
+        <div class="card bg-warning text-white h-100">
+          <div class="card-body">
+            <div class="card-body-icon">
+              <i class="bi bi-clock"></i>
+            </div>
+            <div class="card-text">
+              <div class="mr-5">Pesanan Berlangsung</div>
+              <h3>15</h3>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- Statistik Driver Aktif -->
       <div class="col-md-3 mb-4">
         <div class="card bg-primary text-white h-100">
@@ -9,27 +37,13 @@
               <i class="bi bi-person-fill"></i>
             </div>
             <div class="card-text">
-              <div class="mr-5">Jumlah Driver Taksi Aktif</div>
+              <div class="mr-5">Driver Aktif</div>
               <h3>50</h3>
             </div>
           </div>
         </div>
       </div>
-      <!-- Statistik Perjalanan Hari Ini -->
-      <div class="col-md-3 mb-4">
-        <div class="card bg-warning text-white h-100">
-          <div class="card-body">
-            <div class="card-body-icon">
-              <i class="bi bi-car-front-fill"></i>
-            </div>
-            <div class="card-text">
-              <div class="mr-5">Perjalanan Sedang Berlangsung</div>
-              <h3>120</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Statistik Total Pendapatan -->
+      <!-- Statistik Jumlah Setoran Hari Ini -->
       <div class="col-md-3 mb-4">
         <div class="card bg-success text-white h-100">
           <div class="card-body">
@@ -37,22 +51,8 @@
               <i class="bi bi-currency-dollar"></i>
             </div>
             <div class="card-text">
-              <div class="mr-5">Total Pendapatan Hari Ini</div>
-              <h3>$5,000</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Statistik Lainnya -->
-      <div class="col-md-3 mb-4">
-        <div class="card bg-info text-white h-100">
-          <div class="card-body">
-            <div class="card-body-icon">
-              <i class="bi bi-graph-up"></i>
-            </div>
-            <div class="card-text">
-              <div class="mr-5">Statistik Lainnya</div>
-              <h3>75</h3>
+              <div class="mr-5">Jumlah Setoran Hari Ini</div>
+              <h3>Rp 1.800.000</h3>
             </div>
           </div>
         </div>
