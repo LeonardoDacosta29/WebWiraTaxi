@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
-import AdminDashboardView from "../views/AdminDashboardView.vue";
-import DriverDashboardView from "../views/DriverDashboardView.vue";
-import LoginView from "../views/LoginView.vue";
-import ManagementPesanan from "../components/ManagementPesanan.vue"; // Komponen Manajemen Pesanan
-import ManagementUser from "../components/ManagementUser.vue";
-import ManagementDriver from "../components/ManagementDriver.vue"; // Komponen Manajemen Driver
-import ManagementKendaraan from "../components/ManagementKendaraan.vue"; // Komponen Manajemen Kendaraan
-import ManagementRuteTarif from "../components/ManagementRuteTarif.vue"; // Komponen Manajemen Rute dan Tarif
-import ManagementJadwal from "../components/ManagementJadwal.vue"; // Komponen Manajemen Jadwal
+import AdminDashboardView from "@/views/AdminDashboardView.vue";
+import DriverDashboardView from "@/views/DriverDashboardView.vue";
+import LoginView from "@/views/LoginView.vue";
+import ManagementPesanan from "@/components/ManagementPesanan.vue"; // Komponen Manajemen Pesanan
+import ManagementUser from "@/components/ManagementUser.vue";
+import ManagementDriver from "@/components/ManagementDriver.vue"; // Komponen Manajemen Driver
+import ManagementKendaraan from "@/components/ManagementKendaraan.vue"; // Komponen Manajemen Kendaraan
+import ManagementRuteTarif from "@/components/ManagementRuteTarif.vue"; // Komponen Manajemen Rute dan Tarif
+import ManagementJadwal from "@/components/ManagementJadwal.vue"; // Komponen Manajemen Jadwal
 import AppDashboard from "@/components/AppDashboard.vue";
 import ManagementPemantauan from "@/components/ManagementPemantauan.vue";
 import ManagementLaporan from "@/components/ManagementLaporan.vue";
@@ -43,9 +43,9 @@ const routes = [
     children: [
       { path: "", name: "AppDriverDashboard", component: AppDriverDashboard }, // Rute default
       { path: "daftar-pesanan", name: "DaftarPesanan", component: DaftarPesanan },
-      { path: "update-status", name: "UpdateStatus", component: UpdateStatus},
-      { path: "riwayat-perjalanan", name: "RiwayatPerjalanan", component: RiwayatPerjalanan},
-      { path: "management-profile", name: "ManagementProfile", component: ManagementProfile},
+      { path: "update-status", name: "UpdateStatus", component: UpdateStatus },
+      { path: "riwayat-perjalanan", name: "RiwayatPerjalanan", component: RiwayatPerjalanan },
+      { path: "management-profile", name: "ManagementProfile", component: ManagementProfile },
     ],
   },
 ];
