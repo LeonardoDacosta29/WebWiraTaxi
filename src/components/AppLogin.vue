@@ -36,32 +36,59 @@ export default {
     };
   },
   methods: {
-    async login() {
-      try {
-        // Kirim permintaan login ke backend
-        const response = await axios.post("/users/login", {
-          username: this.username,
-          password: this.password,
-        });
+  async login() {
+    try {
+      const response = await axios.post("/users/login", {
+        username: this.username,
+        password: this.password,
+      });
 
-        // Jika login berhasil
-        if (response.data.success) {
-          const role = response.data.role; // Misal, response mengandung peran pengguna
-          if (role === "admin") {
-            this.$router.push("/admin-dashboard");
-          } else if (role === "driver") {
-            this.$router.push("/driver-dashboard");
-          }
-        } else {
-          this.errorMessage = response.data.message;
+      if (response.data.success) {
+        const userId = response.data.user_id; // Pastikan ini sesuai dengan respons dari server
+        localStorage.setItem("user_id", userId); // Simpan user_id ke localStorage
+        
+        const role = response.data.role;
+        if (role === "admin") {
+          this.$router.push("/admin-dashboard");
+        } else if (role === "driver") {
+          this.$router.push("/driver-dashboard");
         }
-      } catch (error) {
-        console.error(error);
-        // Jika ada masalah dengan koneksi atau server
-      this.errorMessage = error.response?.data.message || "Terjadi kesalahan saat menghubungi server";
+      } else {
+        this.errorMessage = response.data.message;
       }
-    } 
-  },
+    } catch (error) {
+      console.error(error);
+      this.errorMessage = error.response?.data.message || "Terjadi kesalahan saat menghubungi server";
+    }
+  }
+}
+
+  //   async login() {
+  //     try {
+  //       // Kirim permintaan login ke backend
+  //       const response = await axios.post("/users/login", {
+  //         username: this.username,
+  //         password: this.password,
+  //       });
+
+  //       // Jika login berhasil
+  //       if (response.data.success) {
+  //         const role = response.data.role; // Misal, response mengandung peran pengguna
+  //         if (role === "admin") {
+  //           this.$router.push("/admin-dashboard");
+  //         } else if (role === "driver") {
+  //           this.$router.push("/driver-dashboard");
+  //         }
+  //       } else {
+  //         this.errorMessage = response.data.message;
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //       // Jika ada masalah dengan koneksi atau server
+  //     this.errorMessage = error.response?.data.message || "Terjadi kesalahan saat menghubungi server";
+  //     }
+  //   }
+  // },
 };
 </script>
 

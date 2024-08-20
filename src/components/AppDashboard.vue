@@ -58,16 +58,102 @@
         </div>
       </div>
     </div>
+
+    <!-- Chart Rute Terbanyak dan Pendapatan Bulanan -->
+    <div class="row mb-4">
+      <!-- Chart Rute Terbanyak -->
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Rute Terbanyak Bulan Ini</h5>
+            <canvas id="ruteChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chart Pendapatan Bulanan -->
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Pendapatan Bulanan</h5>
+            <canvas id="pendapatanChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { Chart, registerables } from "chart.js";
+
 export default {
   name: "AppDashboard",
   data() {
     return {
-      // Data statistik bisa dimasukkan di sini
+      ruteLabels: ["Pontianak", "Entikong", "Kembayan", "Balai Karangan"], // Contoh data rute
+      ruteData: [50, 30, 20, 10], // Contoh data jumlah pesanan per rute
+
+      pendapatanLabels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"], // Bulan dalam satu tahun
+      pendapatanData: [1000000, 2000000, 1500000, 3000000, 2500000, 2000000], // Contoh data pendapatan per bulan
     };
+  },
+  mounted() {
+    Chart.register(...registerables);
+
+    // Chart Rute Terbanyak
+    const ctxRute = document.getElementById("ruteChart").getContext("2d");
+    new Chart(ctxRute, {
+      type: "bar",
+      data: {
+        labels: this.ruteLabels,
+        datasets: [
+          {
+            label: "Jumlah Pesanan",
+            data: this.ruteData,
+            backgroundColor: "rgba(54, 162, 235, 0.2)",
+            borderColor: "rgba(54, 162, 235, 1)",
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+      },
+    });
+
+    // Chart Pendapatan Bulanan
+    const ctxPendapatan = document.getElementById("pendapatanChart").getContext("2d");
+    new Chart(ctxPendapatan, {
+      type: "line",
+      data: {
+        labels: this.pendapatanLabels,
+        datasets: [
+          {
+            label: "Pendapatan",
+            data: this.pendapatanData,
+            backgroundColor: "rgba(75, 192, 192, 0.2)",
+            borderColor: "rgba(75, 192, 192, 1)",
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+      },
+    });
   },
 };
 </script>
@@ -83,5 +169,12 @@ export default {
 .card-text {
   position: relative;
   z-index: 2;
+}
+.card-title {
+  text-align: center;
+}
+
+canvas {
+  max-height: 400px;
 }
 </style>

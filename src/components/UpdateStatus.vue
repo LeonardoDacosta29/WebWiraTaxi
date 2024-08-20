@@ -45,49 +45,43 @@
 </template>
 
 <script>
+import axios from "../axiosConfig";
+
 export default {
   data() {
     return {
-      ongoingPesanans: [
-        {
-          pesanan_id: 1,
-          rute: "Pontianak - Entikong",
-          tanggal_keberangkatan: "2024-08-19",
-          waktu_keberangkatan: "10:00",
-          nama_pemesan: "Rohit",
-          contact_pemesan: "087876544545",
-          tipe_pesanan: "Orang",
-          jumlah_kursi: 1,
-          status: "Dikerjakan",
-        },
-        {
-          pesanan_id: 2,
-          rute: "Pontianak - Balai Karangan",
-          tanggal_keberangkatan: "2024-08-19",
-          waktu_keberangkatan: "10:00",
-          nama_pemesan: "Lusi",
-          contact_pemesan: "085346567665",
-          tipe_pesanan: "Barang",
-          jumlah_kursi: 2,
-          status: "Dikerjakan",
-        },
-        // Tambahkan data lainnya di sini
-      ],
+      ongoingPesanans: [],
       alertMessage: "",
       alertType: "",
       showAlert: false,
     };
   },
+
+  async mounted() {
+    await this.fetchOngoingPesanans();
+  },
+
   methods: {
-    markAsComplete(pesananId) {
-      const pesananIndex = this.ongoingPesanans.findIndex((p) => p.pesanan_id === pesananId);
-      if (pesananIndex !== -1) {
-        this.ongoingPesanans[pesananIndex].status = "Selesai";
+    async fetchOngoingPesanans() {
+      try {
+        const response = await axios.get(`/pesanan/ongoing`);
+        this.ongoingPesanans = response.data;
+      } catch (error) {
+        console.error("Error fetching ongoing pesanan:", error);
+      }
+    },
+
+    async markAsComplete(pesananId) {
+      try {
+        await axios.put(`/pesanan/${pesananId}/selesai`);
+        this.ongoingPesanans = this.ongoingPesanans.filter((pesanan) => pesanan.pesanan_id !== pesananId);
         this.showAlertMessage("Pesanan berhasil diselesaikan.", "alert-success");
-      } else {
+      } catch (error) {
+        console.error("Error marking pesanan as complete:", error);
         this.showAlertMessage("Gagal menyelesaikan pesanan.", "alert-danger");
       }
     },
+
     showAlertMessage(message, type) {
       this.alertMessage = message;
       this.alertType = type;
